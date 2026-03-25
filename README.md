@@ -24,58 +24,58 @@ La aplicación permite:
 
 Se utiliza una arquitectura basada en MVVM + Repository Pattern, donde el repositorio actúa como fuente única de verdad, de la siguiente forma:
 
-UI (Activity/Fragment)
-↓
-ViewModel
-↓
-Repository
-↓
-Room (Local) + Retrofit (Remote)
-↓
-WorkManager (Sincronización)
+- UI (Activity/Fragment)
+  ↓
+- ViewModel
+  ↓
+- Repository
+  ↓
+- Room (Local) + Retrofit (Remote)
+  ↓
+- WorkManager (Sincronización)
 
 ## Capas
 
 ### data/local
 
-PostEntity: Modelo de datos para Room
-PostDao: Acceso a la base de datos
-AppDatabase: Configuración de Room
+- PostEntity: Modelo de datos para Room
+- PostDao: Acceso a la base de datos
+- AppDatabase: Configuración de Room
 
 ### data/remote
 
-PostApiService: Endpoints de la API
-PostDto: Modelo de red
-RetrofitClient: Cliente HTTP
+- PostApiService: Endpoints de la API
+- PostDto: Modelo de red
+- RetrofitClient: Cliente HTTP
 
 ### data
 
-PostRepository:
-Fuente única de verdad
-Implementa lógica de TTL (cache)
-Decide cuándo llamar a red o usar Room
+- PostRepository:
+  Fuente única de verdad
+  Implementa lógica de TTL (cache)
+  Decide cuándo llamar a red o usar Room
 
 ### ui
 
-PostViewModel:
-Expone datos como Flow
-Maneja lógica de UI
+- PostViewModel:
+  Expone datos como Flow
+  Maneja lógica de UI
 
 ### worker
 
-SyncFavoritesWorker:
-Sincroniza favoritos pendientes
-Ejecutado con WorkManager
+- SyncFavoritesWorker:
+  Sincroniza favoritos pendientes
+  Ejecutado con WorkManager
 
 ## Tecnologías Utilizadas
 
-Kotlin
-Android Studio
-Room Database
-Retrofit
-OkHttp Logging
-WorkManager
-Coroutines + Flow
+- Kotlin
+- Android Studio
+- Room Database
+- Retrofit
+- OkHttp Logging
+- WorkManager
+- Coroutines + Flow
 
 ## Capturas del Proyecto
 
