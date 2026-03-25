@@ -26,7 +26,7 @@ import com.universidad.offlinefirst.data.local.AppDatabase
 import com.universidad.offlinefirst.data.local.PostEntity
 import com.universidad.offlinefirst.data.remote.RetrofitClient
 import com.universidad.offlinefirst.ui.theme.OfflineFirstTheme
-import com.universidad.offlinefirst.viewmodel.PostViewModel
+import com.universidad.offlinefirst.ui.PostViewModel
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)

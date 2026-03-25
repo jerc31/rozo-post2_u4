@@ -35,7 +35,7 @@ class PostRepository(private val dao: PostDao, private val api: PostApiService) 
 
     suspend fun toggleFavorite(context: Context, post: PostEntity) {
         dao.toggleFavorite(post.id, !post.isFavorite)
-        // WorkManager encola la sincronización (ver Paso 5)
+        // WorkManager encola la sincronización
         enqueueFavoriteSync(context)
     }
 
