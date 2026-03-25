@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
         val viewModelFactory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return PostViewModel(repository) as T
+                return PostViewModel(application, repository) as T
             }
         }
 

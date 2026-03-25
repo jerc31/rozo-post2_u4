@@ -1,10 +1,14 @@
 package com.universidad.offlinefirst.data
 
+import android.content.Context
+import androidx.work.*
 import com.universidad.offlinefirst.data.local.PostDao
 import com.universidad.offlinefirst.data.local.PostEntity
 import com.universidad.offlinefirst.data.remote.PostApiService
 import com.universidad.offlinefirst.data.remote.toEntity
+import com.universidad.offlinefirst.worker.SyncFavoritesWorker
 import kotlinx.coroutines.flow.Flow
+import java.util.concurrent.TimeUnit
 
 class PostRepository(private val dao: PostDao, private val api: PostApiService) {
 
@@ -29,8 +33,24 @@ class PostRepository(private val dao: PostDao, private val api: PostApiService) 
         }
     }
 
-    suspend fun toggleFavorite(post: PostEntity) {
+    suspend fun toggleFavorite(context: Context, post: PostEntity) {
         dao.toggleFavorite(post.id, !post.isFavorite)
         // WorkManager encola la sincronización (ver Paso 5)
+        enqueueFavoriteSync(context)
+    }
+
+    fun enqueueFavoriteSync(context: Context) {
+        val request = OneTimeWorkRequestBuilder<SyncFavoritesWorker>()
+            .setConstraints(
+                Constraints(requiredNetworkType = NetworkType.CONNECTED)
+            )
+            .setBackoffCriteria(
+                BackoffPolicy.EXPONENTIAL, 15,
+                TimeUnit.SECONDS
+            )
+            .build()
+
+        WorkManager.getInstance(context)
+            .enqueueUniqueWork("sync_favorites", ExistingWorkPolicy.KEEP, request)
     }
 }

@@ -24,4 +24,7 @@ object RetrofitClient {
             .build()
             .create(PostApiService::class.java)
     }
+
+    // Alias para cumplir con el código del profesor
+    val postApiService: PostApiService get() = instance
 }
